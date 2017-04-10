@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1491853617 source:c:\users\alunoinf_2\desktop\pfc\main.cpp
+	<iostream>
+	"AdjList.h"
+
+1491853384 c:\users\alunoinf_2\desktop\pfc\include\graph.h
+
+1491849570 c:\users\alunoinf_2\desktop\pfc\include\adjmatrix.h
+	"Graph.h"
+	<map>
+
+1491849238 source:c:\users\alunoinf_2\desktop\pfc\src\adjmatrix.cpp
+	"AdjMatrix.h"
+
+1491854032 c:\users\alunoinf_2\desktop\pfc\include\adjlist.h
+	"Graph.h"
+	<map>
+	<vector>
+
+1491850128 source:c:\users\alunoinf_2\desktop\pfc\src\graph.cpp
+	"Graph.h"
+
+1491853589 source:c:\users\alunoinf_2\desktop\pfc\src\adjlist.cpp
+	"AdjList.h"
+	<vector>
+

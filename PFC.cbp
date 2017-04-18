@@ -6,33 +6,46 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/PFC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+			<Target title="ind build_set">
+				<Option output="bin/build_set/PFC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/build_set/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/PFC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+			<Target title="ind check_set">
+				<Option output="bin/check_set/PFC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/check_set/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="include/AdjList.h" />
+		<Unit filename="include/AdjMatrix.h" />
+		<Unit filename="include/Graph.h" />
+		<Unit filename="independent_set/build_set.cpp">
+			<Option target="ind build_set" />
+		</Unit>
+		<Unit filename="independent_set/check_set.cpp">
+			<Option target="ind check_set" />
+		</Unit>
+		<Unit filename="main.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="src/AdjList.cpp" />
+		<Unit filename="src/AdjMatrix.cpp" />
+		<Unit filename="src/Graph.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

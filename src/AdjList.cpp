@@ -1,5 +1,6 @@
 #include "AdjList.h"
-#include <vector>
+#include <set>
+#include <ostream>
 
 AdjList::AdjList(int order)
 {
@@ -24,7 +25,7 @@ bool AdjList::addVertex(int vertex_id)
     return false;
 }
 
-bool AdjList::addVertex(int vertex_id, std::vector<int> adj_vertexes)
+bool AdjList::addVertex(int vertex_id, std::set<int> adj_vertexes)
 {
     if (this->adj_list.find(vertex_id) == this->adj_list.end())
     {
@@ -38,7 +39,7 @@ bool AdjList::addVertex(int vertex_id, std::vector<int> adj_vertexes)
 int AdjList::getMaximumDegree()
 {
     int d = 0;
-    for (std::map< int, std::vector<int> >::iterator it = this->adj_list.begin(); it != this->adj_list.end(); it++)
+    for (std::map< int, std::set<int> >::iterator it = this->adj_list.begin(); it != this->adj_list.end(); it++)
     {
         int dd = (it->second).size();
         d = (d < dd) ? dd : d;
@@ -49,7 +50,7 @@ int AdjList::getMaximumDegree()
 int AdjList::getMinimumDegree()
 {
     int d = this->order;
-    for (std::map< int, std::vector<int> >::iterator it = this->adj_list.begin(); it != this->adj_list.end(); it++)
+    for (std::map< int, std::set<int> >::iterator it = this->adj_list.begin(); it != this->adj_list.end(); it++)
     {
         int dd = (it->second).size();
         d = (d > dd) ? dd : d;
@@ -59,11 +60,29 @@ int AdjList::getMinimumDegree()
 
 int AdjList::getVertexDegree(int vertex_id)
 {
-    std::map< int, std::vector<int> >::iterator it = this->adj_list.find(vertex_id);
+    std::map< int, std::set<int> >::iterator it = this->adj_list.find(vertex_id);
     return (it == this->adj_list.end()) ? -1 : (it->second).size();
 }
 
 void AdjList::removeVertex(int vertex_id)
 {
-    // TODO
+    std::map< int, std::set<int> >::iterator it = this->adj_list.find(vertex_id);
+    for (std::set<int>::iterator it2 = (it->second).begin(); it2 != (it->second).end(); it2++)
+    {
+        std::map< int, std::set<int> >::iterator it3 = this->adj_list.find(*it2);
+        (it3->second).erase(vertex_id);
+    }
+    this->adj_list.erase(it);
+}
+
+std::ostream& operator<< (std::ostream& strm, AdjList& graph)
+{
+    for (std::map< int, std::set<int> >::iterator it = graph.adj_list.begin(); it != graph.adj_list.end(); it++)
+    {
+        strm << "[" << it->first << "] => {";
+        for (std::set<int>::iterator it2 = (it->second).begin(); it2 != (it->second).end(); it2++)
+            strm << " " << *it2;
+        strm << " }" << std::endl;
+    }
+    return strm;
 }

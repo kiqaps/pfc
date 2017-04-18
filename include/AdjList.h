@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include <map>
-#include <vector>
+#include <set>
+#include <ostream>
 
 #ifndef ADJLIST_H
 #define ADJLIST_H
@@ -11,14 +12,15 @@ class AdjList: public Graph
         AdjList(int order);
         AdjList();
         bool addVertex(int vertex_id);
-        bool addVertex(int vertex_id, std::vector<int> adj_vertexes);
+        bool addVertex(int vertex_id, std::set<int> adj_vertexes);
         void removeVertex(int vertex_id);
         int getMaximumDegree();
         int getMinimumDegree();
         int getVertexDegree(int vertex_id);
+        friend std::ostream& operator<< (std::ostream& strm, AdjList& graph);
 
     private:
-        std::map< int, std::vector<int> > adj_list;
+        std::map< int, std::set<int> > adj_list;
 };
 
 #endif // ADJLIST_H

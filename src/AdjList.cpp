@@ -67,12 +67,32 @@ int AdjList::getVertexDegree(int vertex_id)
 void AdjList::removeVertex(int vertex_id)
 {
     std::map< int, std::set<int> >::iterator it = this->adj_list.find(vertex_id);
+
+    if (it == this->adj_list.end())
+        return;
+
     for (std::set<int>::iterator it2 = (it->second).begin(); it2 != (it->second).end(); it2++)
     {
         std::map< int, std::set<int> >::iterator it3 = this->adj_list.find(*it2);
         (it3->second).erase(vertex_id);
     }
+    this->order -= 1;
     this->adj_list.erase(it);
+}
+
+std::map< int, std::set<int> >::iterator AdjList::begin()
+{
+    return this->adj_list.begin();
+}
+
+std::map< int, std::set<int> >::iterator AdjList::end()
+{
+    return this->adj_list.end();
+}
+
+std::set<int>& AdjList::operator[] (const int vertex_id)
+{
+    return this->adj_list[vertex_id];
 }
 
 std::ostream& operator<< (std::ostream& strm, AdjList& graph)

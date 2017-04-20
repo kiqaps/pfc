@@ -40,9 +40,6 @@
 		<Unit filename="independent_set/check_set.cpp">
 			<Option target="ind check_set" />
 		</Unit>
-		<Unit filename="main.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="src/AdjList.cpp" />
 		<Unit filename="src/AdjMatrix.cpp" />
 		<Unit filename="src/Graph.cpp" />

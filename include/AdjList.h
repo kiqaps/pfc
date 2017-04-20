@@ -17,6 +17,9 @@ class AdjList: public Graph
         int getMaximumDegree();
         int getMinimumDegree();
         int getVertexDegree(int vertex_id);
+        std::map< int, std::set<int> >::iterator begin();
+        std::map< int, std::set<int> >::iterator end();
+        std::set<int>& operator[] (const int vertex_id);
         friend std::ostream& operator<< (std::ostream& strm, AdjList& graph);
 
     private:

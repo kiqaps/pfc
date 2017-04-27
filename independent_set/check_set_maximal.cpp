@@ -1,10 +1,12 @@
 #include <iostream>
+#include <cstdio>
 #include <set>
 #include "AdjMatrix.h"
 
 using namespace std;
 
 bool is_independent_set(AdjMatrix g, set<int> the_set);
+bool is_maximal_independent_set(AdjMatrix graph, set<int> the_set);
 
 int main()
 {
@@ -26,8 +28,26 @@ int main()
         cin >> new_set_member;
     }
 
-    cout << is_independent_set(graph, independent_set) << endl;
+    cout << is_maximal_independent_set(graph, independent_set) << endl;
     return 0;
+}
+
+bool is_maximal_independent_set(AdjMatrix graph, set<int> the_set)
+{
+    if (!is_independent_set(graph, the_set))
+        return false;
+
+    for (int i = 0; i < graph.getOrder(); i++)
+    {
+        if (the_set.find(i) == the_set.end())
+        {
+            the_set.insert(i);
+            if (is_independent_set(graph, the_set))
+                return false;
+            the_set.erase(i);
+        }
+    }
+    return true;
 }
 
 bool is_independent_set(AdjMatrix g, set<int> the_set)

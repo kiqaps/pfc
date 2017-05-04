@@ -1,13 +1,13 @@
 #include <iostream>
 #include <cstdio>
 #include "AdjList.h"
+#include "Independent.h"
 
 using namespace std;
 
-set<int> build_independent_set(AdjList graph);
-
 int main()
 {
+    freopen("input.txt", "r", stdin);
     int order, input;
 
     cin >> order;
@@ -23,34 +23,10 @@ int main()
         }
     }
 
-    set<int> independent_set = build_independent_set(graph);
+    set<int> independent_set = build_maximal_independent_set(graph);
     cout << "Independent_Set = {";
     for (set<int>::iterator it = independent_set.begin(); it != independent_set.end(); it++)
         cout << " " << *it;
     cout << " }" << endl;
     return 0;
-}
-
-set<int> build_independent_set(AdjList graph)
-{
-    set<int> independent_set;
-    int minimum_degree;
-    map< int, set<int> >::iterator it;
-
-    while (graph.getOrder())
-    {
-        minimum_degree = graph.getMinimumDegree();
-        for (it = graph.begin(); it != graph.end(); it++)
-        {
-            if (graph.getVertexDegree(it->first) == minimum_degree)
-                break;
-        }
-
-        independent_set.insert(it->first);
-
-        for (set<int>::iterator it2 = (it->second).begin(); it2 != (it->second).end(); it2++)
-            graph.removeVertex(*it2);
-        graph.removeVertex(it->first);
-    }
-    return independent_set;
 }

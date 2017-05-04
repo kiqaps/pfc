@@ -7,8 +7,8 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="ind build_set">
-				<Option output="bin/build_set/PFC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/build_set/" />
+				<Option output="bin/ind_build_set/PFC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/ind_build_set/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -17,8 +17,8 @@
 				</Compiler>
 			</Target>
 			<Target title="ind check_set">
-				<Option output="bin/check_set/PFC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/check_set/" />
+				<Option output="bin/ind_check_set/PFC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/ind_check_set/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -27,8 +27,8 @@
 				</Compiler>
 			</Target>
 			<Target title="ind check_set_maximal">
-				<Option output="bin/check_set/PFC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/check_set/" />
+				<Option output="bin/ind_check_set_maximal/PFC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/ind_check_set_maximal/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -37,8 +37,8 @@
 				</Compiler>
 			</Target>
 			<Target title="dom build_set">
-				<Option output="bin/build_set/PFC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/build_set/" />
+				<Option output="bin/dom_build_set/PFC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/dom_build_set/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -47,8 +47,8 @@
 				</Compiler>
 			</Target>
 			<Target title="dom check_set">
-				<Option output="bin/check_set/PFC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/check_set/" />
+				<Option output="bin/dom_check_set/PFC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/dom_check_set/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -57,8 +57,18 @@
 				</Compiler>
 			</Target>
 			<Target title="dom check_set_minimal">
-				<Option output="bin/check_set/PFC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/check_set/" />
+				<Option output="bin/dom_check_set_minimal/PFC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/dom_check_set_minimal/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+			</Target>
+			<Target title="ind maximum_independent_set">
+				<Option output="bin/ind_build_set_maximum/PFC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/ind_build_set_maximum/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -82,7 +92,18 @@
 		</Unit>
 		<Unit filename="include/AdjList.h" />
 		<Unit filename="include/AdjMatrix.h" />
+		<Unit filename="include/Dominant.h">
+			<Option target="dom build_set" />
+			<Option target="dom check_set" />
+			<Option target="dom check_set_minimal" />
+		</Unit>
 		<Unit filename="include/Graph.h" />
+		<Unit filename="include/Independent.h">
+			<Option target="ind build_set" />
+			<Option target="ind check_set" />
+			<Option target="ind check_set_maximal" />
+			<Option target="ind maximum_independent_set" />
+		</Unit>
 		<Unit filename="independent_set/build_set.cpp">
 			<Option target="ind build_set" />
 		</Unit>
@@ -92,9 +113,24 @@
 		<Unit filename="independent_set/check_set_maximal.cpp">
 			<Option target="ind check_set_maximal" />
 		</Unit>
+		<Unit filename="independent_set/maximum_independent_set.cpp">
+			<Option target="ind maximum_independent_set" />
+		</Unit>
 		<Unit filename="src/AdjList.cpp" />
 		<Unit filename="src/AdjMatrix.cpp" />
+		<Unit filename="src/Dominant.cpp">
+			<Option target="ind check_set" />
+			<Option target="dom build_set" />
+			<Option target="dom check_set" />
+			<Option target="dom check_set_minimal" />
+		</Unit>
 		<Unit filename="src/Graph.cpp" />
+		<Unit filename="src/Independent.cpp">
+			<Option target="ind build_set" />
+			<Option target="ind check_set" />
+			<Option target="ind check_set_maximal" />
+			<Option target="ind maximum_independent_set" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

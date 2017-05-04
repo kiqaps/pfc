@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include "./AdjMatrix.h"
 #include "Independent.h"
+#include <ctime>
 
 using namespace std;
 
@@ -12,6 +13,7 @@ set<int> maximum_independet_set_MELHORADO(AdjMatrix g);
 int main()
 {
     freopen("input.txt", "r", stdin);
+    clock_t tbegin, tend;
     int n_vertex;
 
     cin >> n_vertex;
@@ -22,7 +24,38 @@ int main()
         for (int j = 0; j < n_vertex; j++)
             cin >> graph[i][j];
 
-    set<int> maxIndependentSet = maximum_independet_set(graph);
+    set<int> maxIndependentSet = build_maximal_independent_set(AdjList(graph));
+
+    cout << "Maximal:" << endl;
+    cout << "Tamanho = " << maxIndependentSet.size() << " : {";
+    for (set<int>::iterator it = maxIndependentSet.begin(); it != maxIndependentSet.end(); it++)
+    {
+        cout << " " << *it;
+    }
+    cout << " }" << endl;
+
+    maxIndependentSet.clear();
+    cout << "Normal:" << endl;
+    tbegin = clock();
+    maxIndependentSet = maximum_independet_set(graph);
+    tend = clock();
+
+    cout << "Tempo: " << (double)(tend - tbegin)/CLOCKS_PER_SEC << endl;
+
+    cout << "Tamanho = " << maxIndependentSet.size() << " : {";
+    for (set<int>::iterator it = maxIndependentSet.begin(); it != maxIndependentSet.end(); it++)
+    {
+        cout << " " << *it;
+    }
+    cout << " }" << endl;
+
+    maxIndependentSet.clear();
+    cout << endl << "Melhorado:" << endl;
+    tbegin = clock();
+    maxIndependentSet = maximum_independet_set_MELHORADO(graph);
+    tend = clock();
+
+    cout << "Tempo: " << (double)(tend - tbegin)/CLOCKS_PER_SEC << endl;
 
     cout << "Tamanho = " << maxIndependentSet.size() << " : {";
     for (set<int>::iterator it = maxIndependentSet.begin(); it != maxIndependentSet.end(); it++)
@@ -57,10 +90,11 @@ set<int> maximum_independet_set(AdjMatrix g)
     return maximum_set;
 }
 
-set<int> maximum_independet_set_MELHORADO(AdjList g)
+set<int> maximum_independet_set_MELHORADO(AdjMatrix g)
 {
     set<int> maximum_set, combination;
-    for (int i = 1; i <= g.getOrder(); i++)
+    maximum_set = build_maximal_independent_set(AdjList(g));
+    for (int i = maximum_set.size() + 1; i <= g.getOrder(); i++)
     {
         string bitmask = create_bitmask(g.getOrder(), i);
         while (1)

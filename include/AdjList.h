@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include "AdjMatrix.h"
 #include <map>
 #include <set>
 #include <ostream>
@@ -11,6 +12,7 @@ class AdjList: public Graph
     public:
         AdjList(int order);
         AdjList();
+        AdjList(AdjMatrix graph);
         bool addVertex(int vertex_id);
         bool addVertex(int vertex_id, std::set<int> adj_vertexes);
         void removeVertex(int vertex_id);

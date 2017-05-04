@@ -4,7 +4,7 @@
 AdjMatrix::AdjMatrix(int order)
 {
     this->order = order;
-    this->matrix = std::vector< std::vector<int> >(order, std::vector<int>(order));
+    this->matrix = std::vector< std::vector<int> >(order, std::vector<int>(order, 0));
 }
 
 int AdjMatrix::getMaximumDegree()

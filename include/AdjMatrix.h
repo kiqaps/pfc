@@ -8,7 +8,7 @@
 class AdjMatrix: public Graph
 {
     public:
-        AdjMatrix(int);
+        AdjMatrix(int order);
         int getMaximumDegree();
         int getMinimumDegree();
         int getVertexDegree(int vertex_id);

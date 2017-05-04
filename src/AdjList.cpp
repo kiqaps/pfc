@@ -1,6 +1,7 @@
 #include "AdjList.h"
+#include "AdjMatrix.h"
 #include <set>
-#include <ostream>
+#include <iostream>
 
 AdjList::AdjList(int order)
 {
@@ -12,6 +13,16 @@ AdjList::AdjList(int order)
 AdjList::AdjList()
 {
     this->order = 0;
+}
+
+AdjList::AdjList(AdjMatrix graph)
+{
+
+    this->order = graph.getOrder();
+    for(int i = 0; i < graph.getOrder(); i++)
+        for (int j = 0; j < graph.getOrder(); j++)
+            if (graph[i][j] == 1)
+                adj_list[i].insert(j);
 }
 
 bool AdjList::addVertex(int vertex_id)

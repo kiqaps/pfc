@@ -1,13 +1,13 @@
 #include <bits/stdc++.h>
 #include "./AdjMatrix.h"
-#include "Independent.h"
+#include "Dominant.h"
 #include <ctime>
 
 using namespace std;
 
 string create_bitmask(int N, int K);
 bool next_combination(int N, string & bitmask, set<int> & combination);
-set<int> maximum_independet_set(AdjMatrix g, int fromWhere = 1);
+set<int> minimum_dominant_set(AdjMatrix g, int fromWhere = 1);
 
 int main()
 {
@@ -23,42 +23,42 @@ int main()
         for (int j = 0; j < n_vertex; j++)
             cin >> graph[i][j];
 
-    set<int> maxIndependentSet = build_maximal_independent_set(AdjList(graph));
+    set<int> minIndependentSet = build_minimal_dominant_set(AdjList(graph));
 
-    cout << "Maximal:" << endl;
-    cout << "Tamanho = " << maxIndependentSet.size() << " : {";
-    int fromWhere = maxIndependentSet.size();
-    for (set<int>::iterator it = maxIndependentSet.begin(); it != maxIndependentSet.end(); it++)
+    cout << "Minimal:" << endl;
+    cout << "Tamanho = " << minIndependentSet.size() << " : {";
+    int fromWhere = minIndependentSet.size();
+    for (set<int>::iterator it = minIndependentSet.begin(); it != minIndependentSet.end(); it++)
     {
         cout << " " << *it;
     }
     cout << " }" << endl;
 
-    maxIndependentSet.clear();
+    minIndependentSet.clear();
     cout << "Normal:" << endl;
     tbegin = clock();
-    maxIndependentSet = maximum_independet_set(graph);
+    minIndependentSet = minimum_dominant_set(graph);
     tend = clock();
 
     cout << "Tempo: " << (double)(tend - tbegin)/CLOCKS_PER_SEC << endl;
 
-    cout << "Tamanho = " << maxIndependentSet.size() << " : {";
-    for (set<int>::iterator it = maxIndependentSet.begin(); it != maxIndependentSet.end(); it++)
+    cout << "Tamanho = " << minIndependentSet.size() << " : {";
+    for (set<int>::iterator it = minIndependentSet.begin(); it != minIndependentSet.end(); it++)
     {
         cout << " " << *it;
     }
     cout << " }" << endl;
 
-    maxIndependentSet.clear();
+    minIndependentSet.clear();
     cout << endl << "Melhorado:" << endl;
     tbegin = clock();
-    maxIndependentSet = maximum_independet_set(graph, fromWhere);
+    minIndependentSet = minimum_dominant_set(graph, fromWhere);
     tend = clock();
 
     cout << "Tempo: " << (double)(tend - tbegin)/CLOCKS_PER_SEC << endl;
 
-    cout << "Tamanho = " << maxIndependentSet.size() << " : {";
-    for (set<int>::iterator it = maxIndependentSet.begin(); it != maxIndependentSet.end(); it++)
+    cout << "Tamanho = " << minIndependentSet.size() << " : {";
+    for (set<int>::iterator it = minIndependentSet.begin(); it != minIndependentSet.end(); it++)
     {
         cout << " " << *it;
     }
@@ -67,21 +67,21 @@ int main()
     return 0;
 }
 
-set<int> maximum_independet_set(AdjMatrix g, int fromWhere)
+set<int> minimum_dominant_set(AdjMatrix g, int fromWhere)
 {
-    set<int> maximum_set, combination;
+    set<int> minimum_set, combination;
     for (int i = fromWhere; i <= g.getOrder(); i++)
     {
         bool found_set = false;
-        string bitmask = create_bitmask(g.getOrder(), i);
+        string bitmask = create_bitmask(g.getOrder(), g.getOrder() - (i - 1));
         while (1)
         {
             bool flag = next_combination(g.getOrder(), bitmask, combination);
 
-            if (is_independent_set(g, combination))
+            if (is_dominant_set(g, combination))
             {
                 found_set = true;
-                maximum_set = combination;
+                minimum_set = combination;
                 break;
             }
 
@@ -92,7 +92,7 @@ set<int> maximum_independet_set(AdjMatrix g, int fromWhere)
         if (!found_set)
             break;
     }
-    return maximum_set;
+    return minimum_set;
 }
 
 string create_bitmask(int N, int K)

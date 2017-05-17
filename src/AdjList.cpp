@@ -17,8 +17,10 @@ AdjList::AdjList()
 
 AdjList::AdjList(AdjMatrix graph)
 {
-
     this->order = graph.getOrder();
+    for (int i = 0; i < this->order; i++)
+        this->adj_list[i].clear();
+
     for(int i = 0; i < graph.getOrder(); i++)
         for (int j = 0; j < graph.getOrder(); j++)
             if (graph[i][j] == 1)

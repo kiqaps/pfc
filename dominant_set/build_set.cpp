@@ -10,19 +10,13 @@ int main()
     int order, input;
 
     cin >> order;
-    AdjList graph(order);
+    AdjMatrix graph(order);
 
     for (int i = 0; i < order; i++)
-    {
         for (int j = 0; j < order; j++)
-        {
-            cin >> input;
-            if (input)
-                graph[i].insert(j);
-        }
-    }
+            cin >> graph[i][j];
 
-    set<int> dominant_set = build_minimal_dominant_set(graph);
+    set<int> dominant_set = build_minimal_dominant_set(AdjList(graph));
     cout << "Minimal Dominant Set = {";
     for (set<int>::iterator it = dominant_set.begin(); it != dominant_set.end(); it++)
         cout << " " << *it;

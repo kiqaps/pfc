@@ -11,19 +11,13 @@ int main()
     int order, input;
 
     cin >> order;
-    AdjList graph(order);
+    AdjMatrix graph(order);
 
     for (int i = 0; i < order; i++)
-    {
         for (int j = 0; j < order; j++)
-        {
-            cin >> input;
-            if (input)
-                graph[i].insert(j);
-        }
-    }
+            cin >> graph[i][j];
 
-    set<int> independent_set = build_maximal_independent_set(graph);
+    set<int> independent_set = build_maximal_independent_set(AdjList(graph));
     cout << "Independent_Set = {";
     for (set<int>::iterator it = independent_set.begin(); it != independent_set.end(); it++)
         cout << " " << *it;

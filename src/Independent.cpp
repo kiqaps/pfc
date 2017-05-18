@@ -1,6 +1,7 @@
 #include "Independent.h"
 #include <set>
 #include <map>
+#include <queue>
 
 using namespace std;
 
@@ -62,5 +63,60 @@ bool is_maximal_independent_set(AdjMatrix graph, set<int> the_set)
             the_set.erase(i);
         }
     }
+    return true;
+}
+
+void bfs(vector<bool> & visited, AdjList graph);
+void bfs(vector<bool> & visited, AdjList graph, int vertex, set<int>* c)
+{
+    set<int> enqueued;
+    queue<int> vertexes;
+    vertexes.push(vertex);
+    enqueued.insert(vertex);
+
+    while (!vertexes.empty())
+    {
+        int v = vertexes.front();
+        vertexes.pop();
+
+        visited[v] = true;
+
+        if (c != NULL)
+            c->insert(v);
+
+        set<int> neighborhood = graph[v];
+        for (set<int>::iterator it = neighborhood.begin(); it != neighborhood.end(); it++)
+        {
+            if (enqueued.find(*it) == enqueued.end())
+            {
+                vertexes.push(*it);
+                enqueued.insert(*it);
+            }
+        }
+    }
+}
+
+bool get_next_connected_component(vector<bool> & visited, AdjList graph, set<int> & component)
+{
+    int i;
+    for (i = 0; i < graph.getOrder(); i++)
+        if (!visited[i])
+            break;
+
+    if (i == graph.getOrder())
+        return false;
+
+    component.clear();
+    bfs(visited, graph, i,  &component);
+    return true;
+}
+
+bool is_connected (AdjList graph)
+{
+    vector<bool> visited(graph.getOrder(), false);
+    bfs(visited, graph, 0);
+    for (int i = 0; i < graph.getOrder(); i++)
+        if (!visited[i])
+            return false;
     return true;
 }

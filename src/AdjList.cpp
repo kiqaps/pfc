@@ -77,6 +77,37 @@ int AdjList::getVertexDegree(int vertex_id)
     return (it == this->adj_list.end()) ? -1 : (it->second).size();
 }
 
+AdjList AdjList::getSubgraph(std::set<int> vertexes)
+{
+    AdjList ret;
+    for (std::set<int>::iterator it = vertexes.begin(); it != vertexes.end(); it++)
+    {
+        std::set<int> neighborhood;
+        if (this->getVertexNeighborhood(*it, neighborhood))
+        {
+            for (std::set<int>::iterator it2 = neighborhood.begin(); it2 != neighborhood.end();)
+            {
+                if (vertexes.find(*it2) == vertexes.end())
+                    it2 = neighborhood.erase(it2);
+                else it2++;
+            }
+            ret.addVertex(*it, neighborhood);
+        }
+    }
+    return ret;
+}
+
+bool AdjList::getVertexNeighborhood(int vertex_id, std::set<int>& neighborhood)
+{
+    std::map< int, std::set<int> >::iterator it = this->adj_list.find(vertex_id);
+    if (it != this->adj_list.end())
+    {
+        neighborhood = it->second;
+        return true;
+    }
+    return false;
+}
+
 void AdjList::removeVertex(int vertex_id)
 {
     std::map< int, std::set<int> >::iterator it = this->adj_list.find(vertex_id);
@@ -108,6 +139,20 @@ std::set<int>& AdjList::operator[] (const int vertex_id)
     return this->adj_list[vertex_id];
 }
 
+AdjList operator- (const AdjList& lhs, int rhs)
+{
+    AdjList ret(lhs);
+    ret.removeVertex(rhs);
+    return ret;
+}
+
+AdjList operator- (const AdjList& lhs, const AdjList& rhs)
+{
+    AdjList ret(lhs);
+    for (std::map< int, std::set<int> >::const_iterator it = rhs.adj_list.begin(); it != rhs.adj_list.end(); it++)
+        ret.removeVertex(it->first);
+    return ret;
+}
 std::ostream& operator<< (std::ostream& strm, AdjList& graph)
 {
     for (std::map< int, std::set<int> >::iterator it = graph.adj_list.begin(); it != graph.adj_list.end(); it++)

@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1496501973 source:c:\users\kiqap\documents\pfc\robson.cpp
+	<bits/stdc++.h>
+	"AdjList.h"
+
+1496500772 c:\users\kiqap\documents\pfc\include\adjlist.h
+	<bits/stdc++.h>
+
+1496500821 source:c:\users\kiqap\documents\pfc\src\adjlist.cpp
+	"AdjList.h"
+

@@ -10,29 +10,28 @@ int ms2 (AdjList graph, set<int> vertexes);
 
 set<int> getSmallestComponent (AdjList graph);
 void chooseAB(AdjList graph, int& a, int& b);
-bool dominates (AdjList graph, set<int> vFA, set<int> vFB);
+bool is_contained (AdjList graph, set<int> A, set<int> B);
+bool edge (AdjList graph, int a, int b);
 
 void p (AdjList g) { cout << "G\n" << g << endl << endl; }
 
+operator[]
+
 int main()
 {
-    freopen("input.txt", "r", stdin);
-    int order;
-    cin >> order;
-    AdjMatrix matrix(order);
-
-    for (int i = 0; i < order; i++)
-        for (int j = 0; j < order; j++)
-            cin >> matrix[i][j];
-
-    AdjList graph(matrix);
-    p(graph);
-    int a,b;
-    chooseAB(graph, a, b);
-    set<int> v;
-    graph.getVertexNeighborhood(a, v);
-    v.insert(a);
-    p(graph - graph.getSubgraph(v));
+    int t[] = {1,2,3,4,5};
+    set<int> s(t, t+5);
+//    freopen("input.txt", "r", stdin);
+//    int order;
+//    cin >> order;
+//    AdjMatrix matrix(order);
+//
+//    for (int i = 0; i < order; i++)
+//        for (int j = 0; j < order; j++)
+//            cin >> matrix[i][j];
+//
+//    AdjList graph(matrix);
+//    cout << ms (graph) << endl;
     return 0;
 }
 
@@ -88,21 +87,101 @@ int ms (AdjList graph)
     if (vA.size() == 3)
         return max(ms2 (graph - A, vA), 1 + ms (graph - graph.getSubgraph(vFA)));
 
-    if (dominates(graph, vFA, vFB))
+    if (is_contained(graph, vFA, vFB))
         return ms (graph - B);
 
     return max(ms (graph - B), 1 + ms (graph - graph.getSubgraph(vFB)));
 }
 
-int ms2 (AdjList graph, set<int> vertexes)
+int ms2 (AdjList graph, set<int> S)
 {
+    if (S.size() <= 1)
+        return 0;
+
+    if (S.size() == 2)
+    {
+        int s1 = *(S.begin());
+        int s2 = *(next(S.begin()));
+
+        if (edge(graph, s1, s2))
+            return 0;
+        else
+            return 2 + ms (graph /* - vFS1 - vFS2*/);
+    }
+
+//    if (S.size() == 3)
     return 0;
 }
 
-bool dominates (AdjList graph, set<int> vFA, set<int> vFB)
+int ms1 (AdjList graph, int s1, int s2)
 {
-    for (set<int>::iterator it = vFA.begin(); it != vFA.end(); it++)
-        if (vFB.find(*it) == vFB.end())
+    set<int> vS1, vFS1, vS2, vFS2;
+    graph.getVertexNeighborhood(s1, vS1);
+    graph.getVertexNeighborhood(s2, vS2);
+    vFS1 = vS1;
+    vFS2 = vS2;
+    vFS1.insert(s1);
+    vFS2.insert(s2);
+
+    if (vS1.size() <= 1)
+        return ms (graph);
+
+    if (edge(graph, s1, s2))
+    {
+        if (vS1.size() <= 3)
+            return ms (graph);
+        else
+            return 1 + max (ms(graph - graph.getSubgraph(vFS1)), ms(graph - graph.getSubgraph(vFS2)));
+    }
+
+    vector<int> intersecao (vS1.size() + vS2.size());
+    vector<int>::iterator it = set_intersection(vS1.begin(), vS1.end(), vS2.begin(), vS2.end(), intersecao.begin());
+    intersecao.resize(it - intersecao.begin());
+
+    if (intersecao.size() != 0)
+        return ms1(graph - graph.getSubgraph(set<int>(intersecao.begin(), intersecao.end())), s1, s2);
+
+    if (vS2.size() == 2)
+    {
+        set<int>::iterator it = vS1.begin();
+        int E = *it, F = *(++it);
+
+        if (edge(graph, E, F))
+            return  1 + ms (graph - graph.getSubgraph(vFS1));
+
+        set<int> vE, vF, vFE, vFF;
+        graph.getVertexNeighborhood(E, vE);
+        graph.getVertexNeighborhood(F, vF);
+        vFE = vE;
+        vFF = vF;
+        vFE.insert(E);
+        vFF.insert(F);
+
+        vector<int> vuniao (vE.size() + vF.size());
+        vector<int>::iterator it2 = set_union(vE.begin(), vE.end(), vF.begin(), vF.end(), vuniao.begin());
+        vuniao.resize(it2 - vuniao.begin());
+        set<int> uniao (vuniao.begin(), vuniao.end());
+        uniao.erase(s1);
+
+        if (is_contained(graph, uniao, vS2))
+            return 3 + ms (graph - graph.getSubgraph(vFS1) - graph.getSubgraph(vFS2));
+        return max (1 + ms(graph - graph.getSubgraph(vFS1)), 3 + ms(graph - graph.getSubgraph(vFE) - graph.getSubgraph(vFF) - graph.getSubgraph(vFS2)));
+    }
+    return 1 + max (ms (graph - graph.getSubgraph(vFS2)), ms2(graph - graph.getSubgraph(vFS1) - s2, vS2));
+}
+
+bool edge (AdjList graph, int a, int b)
+{
+    set<int> v;
+    if (graph.getVertexNeighborhood(a, v))
+        return v.find(b) != v.end();
+    return false;
+}
+
+bool is_contained (AdjList graph, set<int> A, set<int> B)
+{
+    for (set<int>::iterator it = A.begin(); it != A.end(); it++)
+        if (B.find(*it) == B.end())
             return false;
     return true;
 }

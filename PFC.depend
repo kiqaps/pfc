@@ -9,3 +9,13 @@
 1496500821 source:c:\users\kiqap\documents\pfc\src\adjlist.cpp
 	"AdjList.h"
 
+1496770081 source:/home/aluno/pfc/src/AdjList.cpp
+	"AdjList.h"
+
+1496770081 /home/aluno/pfc/include/AdjList.h
+	<bits/stdc++.h>
+
+1496777861 source:/home/aluno/pfc/robson.cpp
+	<bits/stdc++.h>
+	"AdjList.h"
+

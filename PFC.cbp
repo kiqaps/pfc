@@ -22,8 +22,12 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/AdjList.h" />
-		<Unit filename="robson.cpp" />
+		<Unit filename="include/bruteforce.h" />
+		<Unit filename="include/robson.h" />
+		<Unit filename="main.cpp" />
 		<Unit filename="src/AdjList.cpp" />
+		<Unit filename="src/bruteforce.cpp" />
+		<Unit filename="src/robson.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

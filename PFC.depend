@@ -19,3 +19,33 @@
 	<bits/stdc++.h>
 	"AdjList.h"
 
+1496795485 source:/home/kiqaps/pfc/robson.cpp
+	<bits/stdc++.h>
+	"AdjList.h"
+
+1496794117 /home/kiqaps/pfc/include/AdjList.h
+	<bits/stdc++.h>
+
+1496794874 source:/home/kiqaps/pfc/src/AdjList.cpp
+	"AdjList.h"
+
+1496798844 source:/home/kiqaps/pfc/main.cpp
+	<bits/stdc++.h>
+	"AdjList.h"
+	"robson.h"
+	"bruteforce.h"
+
+1496796601 /home/kiqaps/pfc/include/robson.h
+	<bits/stdc++.h>
+	"AdjList.h"
+
+1496797030 source:/home/kiqaps/pfc/src/robson.cpp
+	"robson.h"
+
+1496798145 source:/home/kiqaps/pfc/src/bruteforce.cpp
+	"bruteforce.h"
+
+1496798080 /home/kiqaps/pfc/include/bruteforce.h
+	<bits/stdc++.h>
+	"AdjList.h"
+

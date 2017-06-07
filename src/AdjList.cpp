@@ -46,11 +46,12 @@ int AdjList::grauMaximo()
 
 int AdjList::grau(int vertice)
 {
-    return adj_list[vertice].size();
+    return adj_list.find(vertice) == adj_list.end() ? 0 : adj_list[vertice].size();
 }
 
 bool AdjList::aresta(int v1, int v2)
 {
+    if (adj_list.find(v1) == adj_list.end()) return false;
     return find(adj_list[v1].begin(), adj_list[v1].end(), v2) != adj_list[v1].end();
 }
 
@@ -66,11 +67,12 @@ map< int, vector<int> >::iterator AdjList::end()
 
 vector<int> AdjList::vizinhanca(int vertice)
 {
-    return adj_list[vertice];
+    return adj_list.find(vertice) == adj_list.end() ? vector<int>() : adj_list[vertice];
 }
 
 vector<int> AdjList::vizinhancaFechada(int vertice)
 {
+    if (adj_list.find(vertice) == adj_list.end()) return vector<int>();
     vector<int> v = adj_list[vertice];
     v.push_back(vertice);
     return v;

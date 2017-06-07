@@ -1,39 +1,6 @@
-#include <bits/stdc++.h>
-#include "AdjList.h"
+#include "robson.h"
 
 using namespace std;
-
-int ms(AdjList grafo);
-int ms1(AdjList grafo, int s1, int s2);
-int ms2(AdjList grafo, vector<int> vertices);
-vector<int> ordena(AdjList grafo, vector<int> v);
-void escolherAB(AdjList graph, int& a, int& b);
-vector<int> n2(AdjList grafo, vector<int> vizinhanca);
-vector<int> uniao (vector<int> v1, vector<int> v2);
-vector<int> interseccao (vector<int> v1, vector<int> v2);
-bool estaContido(vector<int> v1, vector<int> v2);
-AdjList subgrafo(AdjList grafo, vector<int> vertices);
-vector<int> getSmallestComponent (AdjList graph);
-bool get_next_connected_component(map<int,bool> & visited, AdjList graph, vector<int> & component);
-bool is_connected (AdjList graph);
-void bfs(map<int,bool> & visited, AdjList graph, int vertex, vector<int>* c = NULL);
-
-int main()
-{
-    freopen("input.txt", "r", stdin);
-
-    int ordem;
-    cin >> ordem;
-    Mat matriz(ordem, vector<int>(ordem));
-
-    for (int i = 0; i < ordem; i++)
-        for (int j = 0; j < ordem; j++)
-            cin >> matriz[i][j];
-
-    AdjList grafo(matriz);
-    cout << ms (grafo) << endl;
-    return 0;
-}
 
 int ms(AdjList grafo)
 {
@@ -67,7 +34,7 @@ int ms(AdjList grafo)
             return 1 + ms(grafo - vFA);
 
         vector<int> vFBB = grafo.vizinhancaFechada(BB);
-        return max(2 + ms(grafo - vFB - vFBB), 1 + ms2(grafo - vFA, n2(grafo, vA)));
+        return max(2 + ms(grafo - vFB - vFBB), 1 + ms2(grafo - vFA, n2(grafo, A, vA)));
     }
 
     if (vA.size() == 3)
@@ -282,7 +249,7 @@ void escolherAB(AdjList graph, int& a, int& b)
     }
 }
 
-vector<int> n2(AdjList grafo, vector<int> vizinhanca)
+vector<int> n2(AdjList grafo, int A, vector<int> vizinhanca)
 {
     vector<int> n2;
     for (size_t i = 0; i < vizinhanca.size(); i++)
@@ -290,6 +257,9 @@ vector<int> n2(AdjList grafo, vector<int> vizinhanca)
         vector <int> v2 = grafo.vizinhanca(vizinhanca[i]);
         n2 = uniao(n2, v2);
     }
+    auto it = find(n2.begin(), n2.end(), A);
+    if (it != n2.end())
+        n2.erase(it);
     return n2;
 }
 

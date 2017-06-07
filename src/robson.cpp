@@ -150,7 +150,7 @@ int ms2(AdjList grafo, vector<int> vertices)
                 if (grafo.aresta(vertices[i], vertices[xx[i][j]]))
                 {
                     int k = 1 - j;
-                    vector<int> vFK = grafo.vizinhancaFechada(vertices[k]);
+                    vector<int> vFK = grafo.vizinhancaFechada(vertices[xx[i][k]]);
                     return 1 + ms1(grafo - vFK, vertices[i], vertices[xx[i][j]]);
                 }
             }

@@ -49,10 +49,11 @@ vector<int> build_maximal_independent_set(AdjList graph)
     return independent_set;
 }
 
-vector<int> mis_bruteforce(AdjList g, int fromWhere)
+int mis_bruteforce(AdjList g, int fromWhere)
 {
-    vector<int> maximum_set, combination;
-    for (int i = fromWhere; i <= g.ordem(); i++)
+    int ret = fromWhere;
+    vector<int> combination;
+    for (int i = fromWhere + 1; i <= g.ordem(); i++)
     {
         bool found_set = false;
         string bitmask = create_bitmask(g.ordem(), i);
@@ -63,7 +64,7 @@ vector<int> mis_bruteforce(AdjList g, int fromWhere)
             if (is_independent_set(g, combination))
             {
                 found_set = true;
-                maximum_set = combination;
+                ret = i;
                 break;
             }
 
@@ -74,7 +75,7 @@ vector<int> mis_bruteforce(AdjList g, int fromWhere)
         if (!found_set)
             break;
     }
-    return maximum_set;
+    return ret;
 }
 
 string create_bitmask(int N, int K)

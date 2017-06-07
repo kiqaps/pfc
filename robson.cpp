@@ -6,6 +6,7 @@ using namespace std;
 int ms(AdjList grafo);
 int ms1(AdjList grafo, int s1, int s2);
 int ms2(AdjList grafo, vector<int> vertices);
+vector<int> ordena(AdjList grafo, vector<int> v);
 void escolherAB(AdjList graph, int& a, int& b);
 vector<int> n2(AdjList grafo, vector<int> vizinhanca);
 vector<int> uniao (vector<int> v1, vector<int> v2);
@@ -130,6 +131,7 @@ int ms1(AdjList grafo, int s1, int s2)
 
 int ms2(AdjList grafo, vector<int> vertices)
 {
+    vertices = ordena(grafo, vertices);
     if (vertices.size() <= 1)
         return 0;
 
@@ -225,6 +227,23 @@ int ms2(AdjList grafo, vector<int> vertices)
         return max(1 + ms(grafo - vFS1), ms2(grafo - vertices[0], SmenosS1));
     }
     return ms(grafo);
+}
+
+vector<int> ordena(AdjList grafo, vector<int> v)
+{
+    vector< pair<int, int> > vetorPar;
+
+    for (size_t i = 0; i < v.size(); i++)
+        vetorPar.push_back(make_pair(v[i], grafo.grau(v[i])));
+
+    sort(vetorPar.begin(), vetorPar.end(), [](const pair<int,int> & left, const pair<int,int> & right){
+            return left.second < right.second;
+         });
+
+    vector<int> ret;
+    for (size_t i = 0; i < v.size(); i++)
+        ret.push_back(vetorPar[i].first);
+    return ret;
 }
 
 void escolherAB(AdjList graph, int& a, int& b)

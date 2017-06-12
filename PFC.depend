@@ -69,3 +69,29 @@
 1497291700 source:/home/aluno/pfc/src/robson.cpp
 	"robson.h"
 
+1497295632 source:/home/aluno/independent/main.cpp
+	<bits/stdc++.h>
+	"AdjList.h"
+	"robson.h"
+	"bruteforce.h"
+
+1497294892 /home/aluno/independent/include/AdjList.h
+	<bits/stdc++.h>
+
+1497294892 /home/aluno/independent/include/robson.h
+	<bits/stdc++.h>
+	"AdjList.h"
+
+1497294892 /home/aluno/independent/include/bruteforce.h
+	<bits/stdc++.h>
+	"AdjList.h"
+
+1497294892 source:/home/aluno/independent/src/AdjList.cpp
+	"AdjList.h"
+
+1497294892 source:/home/aluno/independent/src/bruteforce.cpp
+	"bruteforce.h"
+
+1497294892 source:/home/aluno/independent/src/robson.cpp
+	"robson.h"
+

@@ -128,6 +128,7 @@ int ms2(AdjList grafo, vector<int> vertices)
 
         int xx[3][2] =
         {
+        //   0  1
             {1, 2},
             {0, 2},
             {0, 1}
@@ -145,7 +146,7 @@ int ms2(AdjList grafo, vector<int> vertices)
 
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 2; j++)
+            for (int j = i; j < 2; j++)
             {
                 if (grafo.aresta(vertices[i], vertices[xx[i][j]]))
                 {
@@ -158,15 +159,15 @@ int ms2(AdjList grafo, vector<int> vertices)
 
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 2; j++)
+            for (int j = i; j < 2; j++)
             {
                 vector<int> vSI = grafo.vizinhanca(vertices[i]);
                 vector<int> vSJ = grafo.vizinhanca(vertices[xx[i][j]]);
-                vector<int> vSI_uniao_vSJ = uniao(vSI, vSJ);
+                vector<int> vSI_interseccao_vSJ = interseccao(vSI, vSJ);
 
                 for (auto it = grafo.begin(); it != grafo.end(); it++)
                 {
-                    if (find(vSI_uniao_vSJ.begin(), vSI_uniao_vSJ.end(), it->first) != vSI_uniao_vSJ.end())
+                    if (find(vSI_interseccao_vSJ.begin(), vSI_interseccao_vSJ.end(), it->first) != vSI_interseccao_vSJ.end())
                         return ms2(grafo - it->first, vertices);
                 }
             }
@@ -179,7 +180,7 @@ int ms2(AdjList grafo, vector<int> vertices)
         vector<int> vFS2 = grafo.vizinhancaFechada(vertices[1]);
         vector<int> vFS3 = grafo.vizinhancaFechada(vertices[2]);
         return max(1 + ms1(grafo - vFS1, *(next(vertices.begin())), *(next(vertices.begin(), 2))),
-            ms2(grafo - vFS2 - vFS3 - vertices[0], vFS1));
+            ms2(grafo - vFS2 - vFS3 - vertices[0], vS1));
     }
 
     if (vertices.size() == 4)

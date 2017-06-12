@@ -9,10 +9,10 @@
 1496791487 source:c:\users\kiqap\documents\pfc\src\adjlist.cpp
 	"AdjList.h"
 
-1496833094 source:/home/aluno/pfc/src/AdjList.cpp
+1497286866 source:/home/aluno/pfc/src/AdjList.cpp
 	"AdjList.h"
 
-1496833094 /home/aluno/pfc/include/AdjList.h
+1497286866 /home/aluno/pfc/include/AdjList.h
 	<bits/stdc++.h>
 
 1496777861 source:/home/aluno/pfc/robson.cpp
@@ -49,23 +49,23 @@
 	<bits/stdc++.h>
 	"AdjList.h"
 
-1496842588 source:/home/aluno/pfc/main.cpp
+1497286866 source:/home/aluno/pfc/main.cpp
 	<bits/stdc++.h>
 	"AdjList.h"
 	"robson.h"
 	"bruteforce.h"
 
-1496833094 /home/aluno/pfc/include/robson.h
+1497286866 /home/aluno/pfc/include/robson.h
 	<bits/stdc++.h>
 	"AdjList.h"
 
-1496833383 /home/aluno/pfc/include/bruteforce.h
+1497286866 /home/aluno/pfc/include/bruteforce.h
 	<bits/stdc++.h>
 	"AdjList.h"
 
-1496833377 source:/home/aluno/pfc/src/bruteforce.cpp
+1497286866 source:/home/aluno/pfc/src/bruteforce.cpp
 	"bruteforce.h"
 
-1496841825 source:/home/aluno/pfc/src/robson.cpp
+1497291700 source:/home/aluno/pfc/src/robson.cpp
 	"robson.h"
 

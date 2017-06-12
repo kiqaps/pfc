@@ -5,11 +5,12 @@
 
 using namespace std;
 
-int main()
+double escala (int ordem);
+
+int main(int argc, char** argv)
 {
-    freopen("inputzinha.txt", "r", stdin);
-    clock_t t1, t2, gt1, gt2;
-    int ordem, t[3];
+    clock_t t1, t2;
+    int ordem, r[3];
     gt1 = clock();
     while (cin >> ordem)
     {
@@ -53,7 +54,17 @@ int main()
             }
         }
     }
-    gt2 = clock();
-    cout << endl << "Tempo total: " << (double)(gt2 - gt1) / CLOCKS_PER_SEC << endl;
     return 0;
+}
+
+double escala (int ordem)
+{
+    if (ordem <= 5)
+        return 1000000;
+    else if (ordem < 15)
+        return 1000;
+    else if (ordem < 25)
+        return 1;
+    else
+        return 1/60;
 }

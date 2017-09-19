@@ -32,13 +32,15 @@ int main(int argc, char** argv)
         r[1] = mis_bruteforce(grafo, maximal.size());
         t2 = clock();
         cout << "\t" << (double)(t2 - t1) / (CLOCKS_PER_SEC/escala(ordem));
+
         t1 = clock();
         r[2] = ms(grafo);
         t2 = clock();
-        cout << "\t" << (double)(t2 - t1) / (CLOCKS_PER_SEC/escala(ordem)) << endl;
+        cout << "\t" << (double)(t2 - t1) / (CLOCKS_PER_SEC/escala(ordem));
 
         if (r[0] != r[1] || r[1] != r[2])
         {
+            cout << endl;
             cerr << ordem << endl;
             for (int i = 0; i < ordem; i++)
             {
@@ -48,6 +50,8 @@ int main(int argc, char** argv)
                 }
                 cerr << endl;
             }
+        } else {
+            cout << "\t" << r[0] << endl;
         }
     }
     return 0;

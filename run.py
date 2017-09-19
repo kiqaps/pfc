@@ -17,28 +17,35 @@ graph_files = [
 ]
 
 def processar(grafo, ini = None, fim = None):
-    resultado = open("resultados/" + grafo[0] + ".txt", "w")
     
     if ini is None:
+        resultado = open("resultados/" + grafo[0] + ".txt", "w")
+        erros = open("resultados/" + grafo[0] + ".erros.txt", "w")
         for idx in range(grafo[1]):
             showg = subprocess.Popen (["./bin/showg", "-Aq", "grafos/" + grafo[0], "-p" + str(idx + 1)], stdout = subprocess.PIPE)
-            PFC = subprocess.Popen(["./bin/PFC"], stdin = showg.stdout, stdout = subprocess.PIPE)
+            PFC = subprocess.Popen(["./bin/PFC"], stdin = showg.stdout, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
             out, err = PFC.communicate()
             resultado.write(out)
+            erros.write(err)
+        resultado.close()
+        erros.close()
     else:
+        resultado = open("resultados/" + grafo[0] + "." + str(ini) + "-" + str(fim) + ".txt", "w")
+        erros = open("resultados/" + grafo[0] + ".erros.txt", "w")
         for idx in range(fim - ini):
             showg = subprocess.Popen (["./bin/showg", "-Aq", "grafos/" + grafo[0], "-p" + str(idx + 1 + ini)], stdout = subprocess.PIPE)
-            PFC = subprocess.Popen(["./bin/PFC"], stdin = showg.stdout, stdout = subprocess.PIPE)
+            PFC = subprocess.Popen(["./bin/PFC"], stdin = showg.stdout, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
             out, err = PFC.communicate()
             resultado.write(out)
-
-    resultado.close()
+            erros.write(err)
+        resultado.close()
+        erros.close()
 
 def main():
     for grafo in graph_files:
         if sys.argv[1] in grafo[0]:
             if len(sys.argv) == 2: processar(grafo)
-            else: processar(grafo, sys.argv[2], sys.argv[3])               
+            else: processar(grafo, int(sys.argv[2]), int(sys.argv[3]))               
 
 if __name__ == '__main__':
     main()

@@ -1,70 +1,72 @@
 #include <bits/stdc++.h>
 #include "AdjList.h"
-#include "robson.h"
 #include "bruteforce.h"
+#include "mds.h"
 
 using namespace std;
 
-double escala (int ordem);
+/*
+
+10
+0 0 0 0 0 0 1 1 1 1
+0 0 0 0 0 0 1 1 1 1
+0 0 0 0 0 0 1 1 1 1
+0 0 0 0 0 0 1 1 1 1
+0 0 0 0 0 0 1 1 1 1
+0 0 0 0 0 0 1 1 1 1
+1 1 1 1 1 1 0 1 1 1
+1 1 1 1 1 1 1 0 1 1
+1 1 1 1 1 1 1 1 0 1
+1 1 1 1 1 1 1 1 1 0
+
+
+*/
 
 int main(int argc, char** argv)
 {
-    clock_t t1, t2;
-    int ordem, r[3];
+    int c = 1;
+    int ordem;
     while (cin >> ordem)
     {
-
-        Mat matriz(ordem, vector<int>(ordem));
+        Mat adjMat = Mat(ordem, vector<int>(ordem, 0));
 
         for (int i = 0; i < ordem; i++)
             for (int j = 0; j < ordem; j++)
-                cin >> matriz[i][j];
+                cin >> adjMat[i][j];
 
-        AdjList grafo(matriz);
+        AdjList g(adjMat);
+        vector<int> minimal = build_minimal_dominating_set(g);
+        cout << "Test: "<< (c++) << ", MinimalSize: " << minimal.size() << ", IsMinimalMinimal: " << is_minimal_dominating_set(g, minimal);
+        int ret, iret, lret;
+        clock_t t1, t2;
+        double diff_bf, diff_ibf, diff_linear;
+        t1 = clock();
+        ret = mds_bruteforce(g);
+        t2 = clock();
+
+        diff_bf = (double) (t2 - t1) / CLOCKS_PER_SEC;
+
+
 
         t1 = clock();
-        r[0] = mis_bruteforce(grafo);
+        iret = mds_bruteforce_improved(g);
         t2 = clock();
-        cout << (double)(t2 - t1) / (CLOCKS_PER_SEC/escala(ordem));
+
+        diff_ibf = (double) (t2 - t1) / CLOCKS_PER_SEC;
 
         t1 = clock();
-        vector<int> maximal = build_maximal_independent_set(grafo);
-        r[1] = mis_bruteforce(grafo, maximal.size());
+        lret = mds(g);
         t2 = clock();
-        cout << "\t" << (double)(t2 - t1) / (CLOCKS_PER_SEC/escala(ordem));
 
-        t1 = clock();
-        r[2] = ms(grafo);
-        t2 = clock();
-        cout << "\t" << (double)(t2 - t1) / (CLOCKS_PER_SEC/escala(ordem));
+        diff_linear = (double) (t2 - t1) / CLOCKS_PER_SEC;
 
-        if (r[0] != r[1] || r[1] != r[2])
-        {
-            cout << endl;
-            cerr << ordem << endl;
-            for (int i = 0; i < ordem; i++)
-            {
-                for (int j = 0; j < ordem; j++)
-                {
-                    cerr << matriz[i][j] << " ";
-                }
-                cerr << endl;
-            }
-        } else {
-            cout << "\t" << r[0] << endl;
-        }
+        cout << ", BF: " << ret << ", I-BF: " << iret << ", Linear: " << lret << ", T BF: " << diff_bf << ", T I-BF: " << diff_ibf << ", T Linear: " << diff_linear;
+
+        if (ret != iret)
+            cout << " *********************";
+        else if (ret != lret)
+            cout << " !!!!!!!!!!!!!!!!!!!!!";
+        cout <<endl;
     }
     return 0;
-}
-
-double escala (int ordem)
-{
-    if (ordem <= 10)
-        return 1000000;
-    else if (ordem < 15)
-        return 1000;
-    else if (ordem < 25)
-        return 1;
-    else
-        return 1./60.;
 }

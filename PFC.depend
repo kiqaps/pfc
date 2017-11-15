@@ -95,3 +95,36 @@
 1497294892 source:/home/aluno/independent/src/robson.cpp
 	"robson.h"
 
+1510745226 source:/home/kiqaps/Documentos/pfc/src/AdjList.cpp
+	"AdjList.h"
+
+1510745226 /home/kiqaps/Documentos/pfc/include/AdjList.h
+	<bits/stdc++.h>
+
+1510763962 source:/home/kiqaps/Documentos/pfc/main.cpp
+	<bits/stdc++.h>
+	"AdjList.h"
+	"bruteforce.h"
+	"mds.h"
+
+1510746930 /home/kiqaps/Documentos/pfc/include/bruteforce.h
+	<bits/stdc++.h>
+	"AdjList.h"
+
+1510745226 source:/home/kiqaps/Documentos/pfc/src/robson.cpp
+	"robson.h"
+
+1510745226 /home/kiqaps/Documentos/pfc/include/robson.h
+	<bits/stdc++.h>
+	"AdjList.h"
+
+1510750024 source:/home/kiqaps/Documentos/pfc/src/bruteforce.cpp
+	"bruteforce.h"
+
+1510762314 /home/kiqaps/Documentos/pfc/include/mds.h
+	<bits/stdc++.h>
+	"AdjList.h"
+
+1510768040 source:/home/kiqaps/Documentos/pfc/src/mds.cpp
+	"mds.h"
+

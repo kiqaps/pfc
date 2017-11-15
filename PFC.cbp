@@ -23,11 +23,11 @@
 		</Compiler>
 		<Unit filename="include/AdjList.h" />
 		<Unit filename="include/bruteforce.h" />
-		<Unit filename="include/robson.h" />
+		<Unit filename="include/mds.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/AdjList.cpp" />
 		<Unit filename="src/bruteforce.cpp" />
-		<Unit filename="src/robson.cpp" />
+		<Unit filename="src/mds.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

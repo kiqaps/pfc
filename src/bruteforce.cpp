@@ -2,97 +2,64 @@
 
 using namespace std;
 
-
-bool is_dominant_set(AdjMatrix g, set<int> the_set)
-{
-    vector<bool> vertexes = vector<bool>(g.getOrder(), false);
-
-    for (set<int>::iterator it = the_set.begin(); it != the_set.end(); ++it)
-    {
-        vertexes[*it] = true;
-        for (int i = 0; i < g.getOrder(); i++)
-            if (g[*it][i] == 1)
-                vertexes[i] = true;
-    }
-
-    for (int i = 0; i < g.getOrder(); i++)
-    {
-        if (!vertexes[i])
-            return false;
-    }
-    return true;
-}
-
 bool is_dominating_set(AdjList g, vector<int> vertices)
 {
     vector<bool> dominated = vector<bool>(g.ordem(), false);
-    for (int i = 0; i < vertices.size(); i++)
+    for (size_t i = 0; i < vertices.size(); i++)
     {
-        vector<int> viz = vizinhancaFechada(vertices[i]);
-        for (int j = 0; j < viz.size(); j++)
-            dominated[j] = true;
+        vector<int> viz = g.vizinhancaFechada(vertices[i]);
+        for (size_t j = 0; j < viz.size(); j++)
+            dominated[viz[j]] = true;
     }
 
     for (int i = 0; i < g.ordem(); i++)
-    {
         if (!dominated[i])
+            return false;
+
+    return true;
+}
+
+bool is_minimal_dominating_set(AdjList g, vector<int> vertices)
+{
+    if (!is_dominating_set(g, vertices))
+        return false;
+
+    for (size_t i = 0; i < vertices.size(); i++)
+    {
+        vector<int> vv = vertices;
+        auto it = next(vv.begin(), i);
+        vv.erase(it);
+
+        if (is_dominating_set(g, vv))
             return false;
     }
     return true;
 }
 
-bool is_independent_set(AdjList g, vector<int> vertices)
+vector<int> build_minimal_dominating_set(AdjList graph)
 {
-    bool is_independent_set = true;
-    for (size_t i = 0; i < vertices.size(); i++)
-        for (size_t j = 0; j < vertices.size(); j++)
-            if (g.aresta(vertices[i], vertices[j]))
-                return false;
-    return is_independent_set;
-}
-
-bool is_maximal_independent_set(AdjList g, vector<int> vertices)
-{
-    if (!is_independent_set(g, vertices))
-        return false;
-
-    for (auto it = g.begin(); it != g.end(); it++)
-    {
-        if (find(vertices.begin(), vertices.end(), it->first) == vertices.end())
-        {
-            vertices.push_back(it->first);
-            if (is_independent_set(g, vertices))
-                return false;
-            vertices.erase(prev(vertices.end()));
-        }
-    }
-    return true;
-}
-
-vector<int> build_maximal_independent_set(AdjList graph)
-{
-    vector<int> independent_set;
-    int minimum_degree;
+    vector<int> dominant_set;
+    int maximum_degree;
     auto it = graph.begin();
 
     while (graph.ordem())
     {
-        minimum_degree = graph.grauMinimo();
+        maximum_degree = graph.grauMaximo();
         for (it = graph.begin(); it != graph.end(); it++)
-            if (graph.grau(it->first) == minimum_degree)
+            if (graph.grau(it->first) == maximum_degree)
                 break;
 
-        independent_set.push_back(it->first);
+        dominant_set.push_back(it->first);
         graph = graph - graph.vizinhancaFechada(it->first);
     }
-    return independent_set;
+    return dominant_set;
 }
 
-int mis_bruteforce(AdjList g, int fromWhere)
+int mds_bruteforce(AdjList g)
 {
-    int ret = fromWhere;
+    int ret = g.ordem();
     vector<int> combination;
-    for (int i = fromWhere + 1; i <= g.ordem(); i++)
+    for (int i = g.ordem() - 1; i >= 1; i--)
     {
         bool found_set = false;
         string bitmask = create_bitmask(g.ordem(), i);
@@ -100,7 +67,7 @@ int mis_bruteforce(AdjList g, int fromWhere)
         {
             bool flag = next_combination(g.ordem(), bitmask, combination);
 
-            if (is_independent_set(g, combination))
+            if (is_dominating_set(g, combination))
             {
                 found_set = true;
                 ret = i;
@@ -113,6 +80,26 @@ int mis_bruteforce(AdjList g, int fromWhere)
 
         if (!found_set)
             break;
+    }
+    return ret;
+}
+
+int mds_bruteforce_improved(AdjList g)
+{
+    int ret = g.ordem();
+    vector<int> combination;
+    for (int i = 1; i < g.ordem(); i++)
+    {
+        string bitmask = create_bitmask(g.ordem(), i);
+        while (1)
+        {
+            bool flag = next_combination(g.ordem(), bitmask, combination);
+            if (is_dominating_set(g, combination))
+                return combination.size();
+
+            if (!flag)
+                break;
+        }
     }
     return ret;
 }
